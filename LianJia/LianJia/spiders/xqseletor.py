@@ -11,7 +11,7 @@ cj_list = []
 
 def get_cj_urls():
     """从数据库中获取"""
-    conn_sel = pymysql.connect(host='localhost', port=, user='', passwd='', db='lianjia')
+    conn_sel = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='lianjia')
     cursor = conn_sel.cursor()
     select_sql = "select `xq_cj_url` from xq"
     try:

@@ -154,7 +154,7 @@ class LianJia():
         return sql
 
     def insert(self, xq_id, xq_url, xq_html, xq_name, xq_cj_url):
-        conn = pymysql.connect(host='localhost', port=, user='', passwd='', db='lianjia')
+        conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='lianjia')
         cursor = conn.cursor()
 
         insert_sql = "insert into `xq` (`xq_id`, `xq_url`, `xq_html`, `xq_name`, `xq_cj_url`)values" \
@@ -182,7 +182,7 @@ class LianJia():
             conn.close()
 
     def get_cj_urls(self):
-        conn_sel = pymysql.connect(host='localhost', port=, user='', passwd='', db='lianjia')
+        conn_sel = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='lianjia')
         cursor = conn_sel.cursor()
         select_sql = "select `xq_cj_url` from xq"
         try:
@@ -200,7 +200,7 @@ class LianJia():
             conn_sel.close()
 
     def insert_deal(self, house_deal):
-        conn = pymysql.connect(host='localhost', port=, user='', passwd='', db='lianjia')
+        conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='lianjia')
         cursor = conn.cursor()
 
         insert_sql = "insert into `house_deal` (`house_id`, `house_url`, `house_title`, `house_dealdate`, " \
@@ -234,7 +234,7 @@ class LianJia():
             conn.close()
 
     def insert_base(self, house_base):
-        conn = pymysql.connect(host='localhost', port=, user='', passwd='', db='lianjia')
+        conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='lianjia')
         cursor = conn.cursor()
 
         insert_sql = "insert into `house_base` (`house_id`, `house_url`, `house_title`, `house_place`, `house_huxin`, " \
@@ -278,7 +278,7 @@ class LianJia():
             conn.close()
 
     def insert_feature(self, house_feature):
-        conn = pymysql.connect(host='localhost', port=, user='', passwd='', db='lianjia')
+        conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='123456', db='lianjia')
         cursor = conn.cursor()
 
         insert_sql = "insert into `house_feature` (`house_id`, `house_tags`, `community_introduce`, `model_introduce`" \

@@ -13,6 +13,7 @@ from LianJia.spiders.xqseletor import cj_list, get_cj_urls
 class WiwjSpider(scrapy.Spider):
     """
     不能在settings添加 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': None, 以及需要 ROBOTSTXT_OBEY = True
+    dont_filter = true 误入爬行循环！
     """
     name = 'lianjia'
     allowed_domains = ['lianjia.com']
@@ -24,7 +25,8 @@ class WiwjSpider(scrapy.Spider):
     # 遍历以上三个链接，100页之后都一样
     xiaoqu_cj_list = "https://bj.lianjia.com/chengjiao/pg{}c{}"
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
+                      ' Chrome/70.0.3538.102 Safari/537.36'
     }
     feature_en_title = {
         '小区介绍': 'community_introduce', '户型介绍': 'model_introduce',
@@ -53,7 +55,7 @@ class WiwjSpider(scrapy.Spider):
             print(str(cjurl_num) + '--' + "成交小区： " + cj_list[cjurl_num - 1])
             if cjurl_num > 0:
                 yield Request(cj_list[cjurl_num - 1], callback=self.parse,
-                              meta={'cj_id': cj_id}, dont_filter=True)
+                              meta={'cj_id': cj_id}, dont_filter=False)
 
     def parse(self, response):
         cj_id = response.meta['cj_id']
@@ -65,7 +67,7 @@ class WiwjSpider(scrapy.Spider):
             for p in range(1, int(pages) + 1):
                 print("第" + str(p) + "页")
                 yield Request(self.xiaoqu_cj_list.format(str(p), cj_id), callback=self.parse_house_info,
-                              dont_filter=True)
+                              dont_filter=False)
 
     def parse_house_info(self, response):
         house_url_list = re.findall(r'<li><a class="img" href="(.*?)".*?><img '
@@ -77,7 +79,7 @@ class WiwjSpider(scrapy.Spider):
             print(house_id, house_url, house_title)
             yield Request(house_url, callback=self.parse_house_detail,
                           meta={'house_url': house_url, 'house_id': house_id, 'house_title': house_title},
-                          dont_filter=True)
+                          dont_filter=False)
 
     def parse_house_detail(self, response):
         house_deal, house_base = HouseDealItem(), HouseBaseItem()
