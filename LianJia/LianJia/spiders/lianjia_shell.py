@@ -10,13 +10,23 @@ import re
 from lxml import etree
 
 
+"""
+北京 成交二手房 790980 小区个数 11638 在售二手房...
+上海 成交二手房 164075 小区个数 31205 在售二手房...
+广州 成交二手房 27028  小区个数 8732  在售二手房...
+深圳 成交二手房 78324  小区个数 6517  在售二手房...
+杭州 成交二手房 30423  小区个数 5936  在售二手房...
+
+"""
+
+
 class LianJia():
     def __init__(self):
         self.cj_list = []
-        # 11633 个小区 388页
-        self.xiaoqu_list = "https://bj.lianjia.com/xiaoqu/pg{}/"   # 2993
-        self.xiaoqu_list_cro11 = "https://bj.lianjia.com/xiaoqu/pg{}cro11/"
-        self.xiaoqu_list_cro21 = "https://bj.lianjia.com/xiaoqu/pg{}cro21/"
+        # 11633 个小区 388页 一页30个
+        self.xiaoqu_list = "https://bj.lianjia.com/xiaoqu/pg{}/"   # 2993 默认排序
+        self.xiaoqu_list_cro11 = "https://bj.lianjia.com/xiaoqu/pg{}cro11/"  # 按成交量
+        self.xiaoqu_list_cro21 = "https://bj.lianjia.com/xiaoqu/pg{}cro21/"  # 小区均价
         # 遍历以上三个链接，100页之后都一样
         self.xiaoqu_cj_list = "https://bj.lianjia.com/chengjiao/pg{}c{}"
         self.headers = {
